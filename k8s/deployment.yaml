@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: policy-chatbot
+  namespace: policy-chatbot
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: policy-chatbot
+  template:
+    metadata:
+      labels:
+        app: policy-chatbot
+    spec:
+      containers:
+        - name: policy-chatbot
+          image: us-central1-docker.pkg.dev/mongodb-gke-project/policy-chatbot/chatbot-api:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CHATBOT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: chatbot-secrets
+                  key: CHATBOT_API_KEY
+            - name: GEMINI_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: chatbot-secrets
+                  key: GEMINI_API_KEY
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "500m"
+              memory: "1Gi"
