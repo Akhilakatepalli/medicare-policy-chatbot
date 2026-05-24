@@ -1,7 +1,6 @@
 venv/
 __pycache__/
 *.pyc
-data/chroma/
 data/pdfs/
 *.egg-info/
 .env
