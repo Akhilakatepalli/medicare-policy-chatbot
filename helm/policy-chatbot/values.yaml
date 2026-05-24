@@ -2,7 +2,7 @@ namespace: policy-chatbot
 
 image:
   repository: us-central1-docker.pkg.dev/mongodb-gke-project/policy-chatbot/chatbot-api
-  tag: 82df72b6774d5f14bd8e24c4a7908548b5425251
+  tag: 49c9c704346cab35b0b9ff8addcc714e80e00eb1
   pullPolicy: Always
 
 replicas: 2
