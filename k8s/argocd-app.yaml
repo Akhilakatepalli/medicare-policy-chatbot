@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: policy-chatbot
+  namespace: healthcare-argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Akhilakatepalli/medicare-policy-chatbot
+    targetRevision: main
+    path: helm/policy-chatbot
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: policy-chatbot
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

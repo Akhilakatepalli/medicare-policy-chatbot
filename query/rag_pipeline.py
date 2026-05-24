@@ -8,7 +8,7 @@ from langchain_core.runnables import RunnablePassthrough
 PROJECT_ID  = "mongodb-gke-project"
 CHROMA_DIR  = "data/chroma"
 COLLECTION  = "policy_docs"
-GEMINI_KEY  = os.getenv("GEMINI_API_KEY", "AIzaSyBg5bOu3COhHeYA3hBNc0_0MI8QMd-aeNU")  # env var injected by k8s Secret in GKE
+GEMINI_KEY  = os.getenv("GEMINI_API_KEY")
 
 PROMPT_TEMPLATE = """
 You are a Medicare and Medicaid policy expert assistant for hospital billing staff and fraud investigators.
