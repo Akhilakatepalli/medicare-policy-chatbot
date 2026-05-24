@@ -3,6 +3,7 @@ import time
 from collections import defaultdict
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.security import APIKeyHeader
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 import sys
@@ -10,6 +11,13 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
 from query.rag_pipeline import ask
 
 app = FastAPI(title="Medicare/Medicaid Policy Chatbot API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 API_KEY        = os.getenv("CHATBOT_API_KEY", "demo-key-12345")
 api_key_header = APIKeyHeader(name="X-API-Key")
